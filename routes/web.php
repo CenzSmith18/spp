@@ -29,27 +29,31 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
 
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
-    Route::get('/admin/dashboard','AdminController@index');
+    Route::get('/dashboard','AdminController@index');
     /*spp*/
-    Route::get('/admin/spp','AdminController@spp');
-    Route::post('/admin/tambah_spp','AdminController@tambahspp');
-    Route::get('/admin/edit_spp/{id}','AdminController@editspp');
-    Route::post('/admin/update_spp','AdminController@updatespp');
-    Route::get('/admin/hapus_spp/{id}','AdminController@hapusspp');
+    Route::get('/spp','SppController@index');
+    Route::post('/tambah_spp','SppController@tambahspp');
+    Route::get('/edit_spp/{id}','SppController@editspp');
+    Route::post('/update_spp','SppController@updatespp');
+    Route::get('/hapus_spp/{id}','SppController@hapusspp');
 
     /*kelas*/
-    Route::get('/admin/kelas','AdminController@kelas');
-    Route::post('/admin/tambah_kelas','AdminController@tambahkelas');
-    Route::get('/admin/edit_kelas/{id}','AdminController@editkelas');
-    Route::post('/admin/update_kelas','AdminController@updatekelas');
-    Route::get('/admin/hapus_kelas/{id}','AdminController@hapuskelas');
+    Route::get('/kelas','KelasController@index');
+    Route::post('/tambah_kelas','KelasController@tambahkelas');
+    Route::get('/edit_kelas/{id}','KelasController@editkelas');
+    Route::post('/update_kelas','KelasController@updatekelas');
+    Route::get('/hapus_kelas/{id}','KelasController@hapuskelas');
 
      /*siswa*/
-     Route::get('/admin/siswa','AdminController@siswa');
-    Route::post('/admin/tambah_siswa','AdminController@tambahsiswa');
-    Route::get('/admin/edit_siswa/{id}','AdminController@editsiswa');
-    Route::post('/admin/update_siswa','AdminController@updatesiswa');
-    Route::get('/admin/hapus_siswa/{id}','AdminController@hapussiswa');
+     Route::get('/siswa','SiswaController@index');
+    Route::post('/tambah_siswa','SiswaController@tambahsiswa');
+    Route::get('/edit_siswa/{nisn}','SiswaController@editsiswa');
+    Route::post('/update_siswa','SiswaController@updatesiswa');
+    Route::get('/hapus_siswa/{nisn}','SiswaController@hapussiswa');
+
+    /*pembayaran*/
+    Route::get('/pembayaran','PembayaranCotroller@index');
+    Route::post('/bayar_spp','PembayaranCotroller@bayar_spp');
 });
 
 Route::middleware(['auth', 'user-access:manager'])->group(function () {
