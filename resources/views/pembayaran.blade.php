@@ -222,10 +222,8 @@
                            
                         </div>
                         <div class="card-body">
-
                             <div class="row">
                                 <div class="id_card">
-
                                     <center><img class="id_card_img"
                                             src="https://www.w3schools.com/howto/img_avatar.png" alt="John"
                                             style="width:100%">
@@ -235,44 +233,37 @@
                                         <p class="title">{{$p->nama_kelas}}</p>
                                         <p>ID SPP : {{$p->id_spp}}</p>
                                     </center>
-
-
                                 </div>
                                 <div class="col-1"></div>
-                             
-                                <form style="width:50%;"class="user" action="bayar_spp" method="post">
+                                <form style="width:50%;" class="user" action="bayar_spp" method="post">
                                     @csrf
                                     <br>
                                     <br>
                                     <br>
                                     <br>
                                     <br>
-                                    <p><b> NISN       :</b> {{$p->nisn}}</p>
+                                    <p><b> NISN :</b> {{$p->nisn}}</p>
                                     <p><b>Nominal SPP :</b> </p>
                                     <?php
                                         $jumlah = 0;
                                     ?>
                                     @foreach($spp as $v)
-                                        <?php
+                                    <?php
                                             $jumlah = $jumlah + $v->nominal
                                         ?>
-                                        <p>Tahun {{$v->tahun}} Rp. {{ number_format($v->nominal, 2)}}</p>
+                                    <p>Tahun {{$v->tahun}} Rp. {{ number_format($v->nominal, 2)}}</p>
                                     @endforeach
-                                        <p><b>Total    : </b>Rp. {{ number_format($jumlah, 2)}}</p>
-                                        
-                                        <div class="modal-footer">
-                                            
-                                            <button type="submit" class="btn btn-primary">Bayar</button>
-                                        </div>
-                                    <input type="hidden" name="nisn" value = "{{$p->nisn}}">
-                                    <input type="hidden" name="id_spp" value = "{{$p->id_spp}}">
-                                    <input type="hidden" name="jumlah_bayar" value = "{{$jumlah}}">
+                                    <p><b>Total : </b>Rp. {{ number_format($jumlah, 2)}}</p>
+
+                                    <div class="modal-footer">
+
+                                        <button type="submit" class="btn btn-primary">Bayar</button>
+                                    </div>
+                                    <input type="hidden" name="nisn" value="{{$p->nisn}}">
+                                    <input type="hidden" name="id_spp" value="{{$p->id_spp}}">
+                                    <input type="hidden" name="jumlah_bayar" value="{{$jumlah}}">
                                 </form>
-
                             </div>
-
-
-
                         </div>
                     @endforeach
 
