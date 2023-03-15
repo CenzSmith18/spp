@@ -107,14 +107,13 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
+             
                     
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                       
+                        
 
                         <!-- Nav Item - Alerts -->
 
@@ -171,66 +170,39 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="tengah"><h1 class="m-0 font-weight-bold text-primary">Edit SPP</h1></div>
+                    <h1 class="h3 mb-2 text-gray-800">SPP</h1>
+
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                           
+                            <h6 class="m-0 font-weight-bold text-primary">Edit Petugas</h6>
 
                             <div class="card-body">
-                                @foreach($siswa as $p)
-                                <form class="user" action="/update_siswa" method="post">
-                                @csrf
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="nisn" class="form-label">NISN</label>
-                                                <input type="text" class="form-control form-control-user"
-                                                    id="nisn" name="nisn"
-                                                    value="{{$p->nisn}}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="nis" class="form-label">NIS</label>
-                                                <input type="text" class="form-control form-control-user"
-                                                    id="nis" name="nis"
-                                                    value="{{$p->nis}}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="nama" class="form-label">Nama Siswa</label>
-                                                <input type="text" class="form-control form-control-user"
-                                                    id="nama" name="nama"
-                                                    value="{{$p->nama}}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="id_kelas" class="form-label">Kelas</label>
-                                                <input type="text" class="form-control form-control-user"
-                                                    id="id_kelas" name="id_kelas"
-                                                    value="{{$p->id_kelas}}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="alamat" class="form-label">Alamat</label>
-                                                <input type="text" class="form-control form-control-user"
-                                                    id="alamat" name="alamat"
-                                                    value="{{$p->alamat}}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="no_telp" class="form-label">No Telpon</label>
-                                                <input type="number" class="form-control form-control-user"
-                                                    id="no_telp" name="no_telp"
-                                                    value="{{$p->no_telp}}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="Id Spp" class="form-label">Id Spp</label>
-                                                <input type="number" class="form-control form-control-user"
-                                                    id="id_spp" name="id_spp"
-                                                    value="{{$p->id_spp}}">
-                                            </div>  
+                                @foreach($petugas as $p)
+                                <form class="user" action="/update_petugas" method="post">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <input type="hidden" id="id" name="id" value="{{$p->id}}">
+                                        
+                                        <div class="form-group">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text" class="form-control form-control-user" id="username"
+                                                name="username" value="{{$p->username}}">
                                         </div>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-secondary" type="button"
-                                                data-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <div class="form-group">
+                                            <label for="nama" class="form-label">Nama</label>
+                                            <input type="text" class="form-control form-control-user" id="nama"
+                                                name="nama" value="{{$p->nama_petugas}}">
                                         </div>
+                                       
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
                                 </form>
                             </div>
                             @endforeach

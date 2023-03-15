@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use DB;
-class PembayaranCotroller extends Controller
+class PembayaranController extends Controller
 {
     function __construct()
     {
@@ -24,6 +24,27 @@ class PembayaranCotroller extends Controller
         $spp = DB::table('spp')->where('id_spp',$id_spp)->get();
         return view('pembayaran',['siswa' => $siswa, 'spp' => $spp]);
     }
+    public function cari(Request $request)
+	{
+		// menangkap data pencarian
+		$cari = $request->cari;
+            
+    		// mengambil data dari table pegawai sesuai pencarian data
+            $siswa = DB::table('siswa')
+            ->join('spp', 'siswa.id_spp', '=', 'spp.id_spp')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->select('siswa.*', 'spp.*','kelas.*')
+            ->where('nama','like',"%".$cari."%")
+            ->paginate(1);
+            $id_spp;
+            foreach ($siswa as $p) {
+                $id_spp = $p->id_spp;
+            }
+        $spp = DB::table('spp')->where('id_spp',$id_spp)->get();
+    		// mengirim data pegawai ke view index
+        return view('pembayaran',['siswa' => $siswa, 'spp' => $spp]);
+ 
+	}
     public function bayar_spp(Request $request)
     {	
         DB::table('pembayaran')->insert([

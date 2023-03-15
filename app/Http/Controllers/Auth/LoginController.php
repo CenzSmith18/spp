@@ -51,7 +51,7 @@ class LoginController extends Controller
         if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
         {
             if (auth()->user()->level == 'admin') {
-                return redirect('/admin/dashboard');
+                return redirect('/dashboard');
             }else if (auth()->user()->level == 'petugas') {
                 return redirect()->route('manager.home');
             }else{

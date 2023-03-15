@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use DB;
-class SppController extends Controller
+class PetugasController extends Controller
 {
     function __construct()
     {
@@ -13,39 +13,37 @@ class SppController extends Controller
     }
     public function index()
     {
-        $spp = DB::table('spp')
-        ->join('siswa', 'siswa.id_spp', '=', 'spp.id_spp')
-        ->join('kelas', 'kelas.id_kelas', '=', 'siswa.id_kelas')
-        ->get();
+        $petugas = DB::table('users')->get();
         
-        return view('spp',['spp' => $spp]);
+        return view('petugas',['petugas' => $petugas]);
     } 
 
    
-    public function tambahspp(Request $request)
+    public function tambahpetugas(Request $request)
     {	
-        DB::table('spp')->insert([
-            'id_spp' => $request->id_spp,
-            'tahun' => $request->tahun,
-            'nominal' => $request->nominal
+        DB::table('users')->insert([
+            'username' => $request->username,
+            'nama_petugas' => $request->nama,
+            'password' => Hash::make($request->password),
+            'level' => 'petugas'
         ]);
-        return redirect('spp');
+        return redirect('petugas');
     }
-    public function editspp($id)
+    public function editpetugas($id)
     {	
-        $spp = DB::table('spp')->where('id_spp',$id)->get();
-        return view('spp/editspp',['spp' => $spp]);
+        $petugas= DB::table('users')->where('id',$id)->get();
+        return view('petugas/editpetugas',['petugas' => $petugas]);
     }  
 
-    public function updatespp(Request $request)
+    public function updatepetugas(Request $request)
     {
         // update data pegawai
-        DB::table('spp')->where('id_spp',$request->id_spp)->update([
-            'tahun' => $request->tahun,
-            'nominal' => $request->nominal
+        DB::table('users')->where('id',$request->id)->update([
+            'username' => $request->username,
+            'nama_petugas' => $request->nama
         ]);
         // alihkan halaman ke halaman pegawai
-        return redirect('spp');
+        return redirect('petugas');
     }
 
     public function hapusspp($id)

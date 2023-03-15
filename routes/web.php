@@ -50,10 +50,18 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('/edit_siswa/{nisn}','SiswaController@editsiswa');
     Route::post('/update_siswa','SiswaController@updatesiswa');
     Route::get('/hapus_siswa/{nisn}','SiswaController@hapussiswa');
+    Route::get('/siswa/cari','SiswaController@cari');
 
     /*pembayaran*/
-    Route::get('/pembayaran','PembayaranCotroller@index');
-    Route::post('/bayar_spp','PembayaranCotroller@bayar_spp');
+    Route::get('/pembayaran','PembayaranController@index');
+    Route::post('/bayar_spp','PembayaranController@bayar_spp');
+    Route::get('/pembayaran/cari','PembayaranController@cari');
+
+    /*petugas*/
+    Route::get('/petugas','PetugasController@index');
+    Route::post('/tambah_petugas','PetugasController@tambahpetugas');
+    Route::get('/edit_petugas/{id}','PetugasController@editpetugas');
+    Route::post('/update_petugas','PetugasController@updatepetugas');
 });
 
 Route::middleware(['auth', 'user-access:manager'])->group(function () {

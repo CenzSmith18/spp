@@ -42,7 +42,8 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            <li class="nav-item">
+            
+            <li class="nav-item active">
                 <a class="nav-link" href="/petugas">
                     <i class="fas fa-user-secret"></i>
                     <span>Petugas</span></a>
@@ -57,7 +58,7 @@
                     <i class="fas fa-fw fa-school"></i>
                     <span>Kelas</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/spp">
                     <i class="fas fa-fw  fa-dollar-sign"></i>
                     <span>SPP</span></a>
@@ -117,46 +118,13 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                  
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
+                        
 
                         <!-- Nav Item - Alerts -->
                        
@@ -213,16 +181,16 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">SPP</h1>
+                    <div class = "tengah"><h1 class="m-0 font-weight-bold text-primary">Data Petugas</h1></div>
                    
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Data SPP</h6>
+                           
                             <div class = "sisi-kanan">
-                            <button type="button" class="btn btn-primary"data-toggle="modal" data-target="#sppModal">
-                                Tambah SPP
+                            <button type="button" class="btn btn-primary"data-toggle="modal" data-target="#petugasModal">
+                                Tambah Petugas
                             </button>
                            
                         </div>
@@ -231,29 +199,24 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>NISN</th>
-                                            <th>Nama</th>
-                                            <th>Kelas</th>
-                                            <th>Tahun</th>
-                                            <th>Nominal</th>
+                                            <th>Username</th>
+                                            <th>Nama Petugas</th>
+                                           
                                             <th>Aksi</th>
                                          
                                         </tr>
                                     </thead>
                                     
                                     <tbody>
-                                    @foreach($spp as $p)
+                                    @foreach($petugas as $p)
                                         <tr>
-                                            <td>{{$p->nisn}}</td>
-                                            <td>{{$p->nama}}</td>
-                                            <td>{{$p->nama_kelas}}</td>
-                                            <td>{{$p->tahun}}</td>
-                                          
-                                            <td>Rp. {{ number_format($p->nominal, 2)}}</td>
+                                            <td>{{$p->username}}</td>
+                                            <td>{{$p->nama_petugas}}</td>
+                                           
                                             <td>
                                               
-                                                <a href="edit_spp/{{$p->id_spp}}" class="btn btn-success btn-sm"><i class="fas fa-edit fa-fw"></i>  </a>
-                                                <a href="hapus_spp/{{$p->id_spp}}" class="btn btn-danger btn-sm"><i class="fas fa-trash fa-fw"></i> </a>
+                                                <a href="edit_petugas/{{$p->id}}" class="btn btn-success btn-sm"><i class="fas fa-edit fa-fw"></i>  </a>
+                                                <a href="hapus_petugas/{{$p->id}}" class="btn btn-danger btn-sm"><i class="fas fa-trash fa-fw"></i> </a>
                                                 
                                             </td>
                                            
@@ -294,36 +257,36 @@
         </div>
     </div>
 
-    <div class="modal fade" id="sppModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="petugasModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah SPP</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Petugas</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form class="user" action="tambah_spp" method="post">
+                <form class="user" action="tambah_petugas" method="post">
                     @csrf
                     <div class="modal-body"> 
                     <div class="form-group">
-                        <label for="id_spp" class="form-label">Id SPP</label>
-                            <input type="number" class="form-control form-control-user"
-                                id="id_spp" name ="id_spp"
-                                placeholder="Masukan Id SPP...">
+                        <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control form-control-user"
+                                id="username" name ="username"
+                                placeholder="Masukan Username...">
                         </div>
                         <div class="form-group">
-                        <label for="tahun" class="form-label">Tahun</label>
-                            <input type="number" class="form-control form-control-user"
-                                id="tahun" name ="tahun"
-                                placeholder="Masukan Tahun...">
+                        <label for="nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control form-control-user"
+                                id="nama" name ="nama"
+                                placeholder="Masukan Nama...">
                         </div>
                         <div class="form-group">
-                        <label for="nominal" class="form-label">Nominal</label>
-                            <input type="number" class="form-control form-control-user"
-                                id="nominal" name ="nominal"
-                                placeholder="Masukan Nominal...">
+                        <label for="password" class="form-label">Password</label>
+                            <input type="text" class="form-control form-control-user"
+                                id="password" name ="password"
+                                placeholder="Masukan Password...">
                         </div>
                     </div>
                

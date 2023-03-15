@@ -13,10 +13,29 @@ class SiswaController extends Controller
     }
     public function index()
     {
-        $siswa = DB::table('siswa')->get();
+        $siswa = DB::table('siswa')
+        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+        ->select('siswa.*','kelas.*')
+        ->paginate(10);
         
         return view('siswa',['siswa' => $siswa]);
     }
+    public function cari(Request $request)
+	{
+		// menangkap data pencarian
+		$cari = $request->cari;
+ 
+    		// mengambil data dari table pegawai sesuai pencarian data
+		$siswa = DB::table('siswa')
+		->where('nama','like',"%".$cari."%")
+        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+		->paginate();
+ 
+    		// mengirim data pegawai ke view index
+		return view('siswa',['siswa' => $siswa]);
+ 
+	}
+    
     public function tambahsiswa(Request $request)
     {	
         DB::table('siswa')->insert([
@@ -26,7 +45,7 @@ class SiswaController extends Controller
             'id_kelas' => $request->id_kelas,
             'alamat' => $request->alamat,
             'no_telp' => $request->no_telp,
-            'id_spp' => $request->no_telp,
+            'id_spp' => $request->id_spp,
         ]);
         return redirect('siswa');
     }
