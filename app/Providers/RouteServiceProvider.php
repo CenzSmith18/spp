@@ -38,6 +38,12 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->namespace('App\Http\Controllers')
                 ->group(base_path('routes/web.php'));
+
+            Route::middleware('siswa')
+                ->namespace($this->namespace) // this line
+                ->namespace($this->namespace)
+                ->namespace('App\Http\Controllers')
+                ->group(base_path('routes/siswa.php'));
         });
     }
 

@@ -28,9 +28,9 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
 
-                <div class="sidebar-brand-text mx-3">Admin Dashboard</div>
+                <div class="sidebar-brand-text mx-3">Dashboard</div>
             </a>
 
             <!-- Divider -->
@@ -38,25 +38,76 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="dashboard">
+                <a class="nav-link" href="/dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
+
+            <?php
+          
+                if (isset(Auth::user()->level)) {
+                   
+                    
+                    if(Auth::user()->level == "admin"){
+
+                    
+                    ?>
             <li class="nav-item">
                 <a class="nav-link" href="/petugas">
                     <i class="fas fa-user-secret"></i>
                     <span>Petugas</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/siswa">
                     <i class="fas fa-fw fa-user-graduate"></i>
                     <span>Siswa</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
+                <a class="nav-link" href="/kelas">
+                    <i class="fas fa-fw fa-school"></i>
+                    <span>Kelas</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/spp">
                     <i class="fas fa-fw  fa-dollar-sign"></i>
                     <span>SPP</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/generate_laporan">
+                    <i class="fas fa-fw  fa-file"></i>
+                    <span>Generate Laporan</span></a>
+            </li>
+            <?php
+                    }
+                }
+
+            ?>
+
+                <?php if (isset(Auth::user()->level))
+                 {
+
+                   
+
+                    if(Auth::user()->level=="admin" or "petugas") {
+
+
+                        ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/pembayaran">
+                                <i class="fas fa-fw  fa-dollar-sign"></i>
+                                <span>Entri Transaksi Pembayaran</span></a>
+                        </li>
+                        <?php
+                    }
+                }
+
+            ?>
+            <li class="nav-item">
+                <a class="nav-link" href="/historipembayaran">
+                    <i class="fas fa-fw  fa-file-invoice"></i>
+                    <span>Histori Pembayaran</span></a>
+            </li>
+
 
             <!-- Divider -->
 
@@ -128,25 +179,13 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->name;}}</span>
+                               
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
+                                
                                 <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal"
                                     data-target="#logoutModal" onclick="event.preventDefault();
                                                             document.getElementById('logout-form').submit();">
@@ -258,7 +297,8 @@
                                     <div class="modal-footer">
                                         <button class="btn btn-secondary" type="button"
                                             data-dismiss="modal">Cancel</button>
-                                        <a class="btn btn-primary" href="login.html">Logout</a>
+                                        <a class="btn btn-primary" href="{{route('logout')}}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">Logout</a>
                                     </div>
                                 </div>
                             </div>

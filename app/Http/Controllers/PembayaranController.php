@@ -24,6 +24,29 @@ class PembayaranController extends Controller
         $spp = DB::table('spp')->where('id_spp',$id_spp)->get();
         return view('pembayaran',['siswa' => $siswa, 'spp' => $spp]);
     }
+    public function history()
+    {
+        $nisn;
+        $id_spp;
+        if(isset(Auth::guard('siswa')->user()->nisn)){
+            $nisn = Auth::guard('siswa')->user()->nisn;
+        }else {
+            $nisn = 2312;
+        }
+        if(isset(Auth::guard('siswa')->user()->id_spp)){
+            $id_spp = Auth::guard('siswa')->user()->id_spp;
+        }else {
+            $id_spp = 4;
+        }
+        $pembayaran = DB::table('pembayaran')
+        ->join('users', 'pembayaran.id_petugas', '=', 'users.id') //petugas
+        ->select('pembayaran.*', 'users.*')
+        ->where('nisn',$nisn)
+        ->paginate();
+        $siswa= DB::table('siswa')->where('nisn',$nisn)->get();
+       
+        return view('history',['pembayaran' => $pembayaran, 'siswa' => $siswa]);
+    }
     public function cari(Request $request)
 	{
 		// menangkap data pencarian
@@ -45,6 +68,30 @@ class PembayaranController extends Controller
         return view('pembayaran',['siswa' => $siswa, 'spp' => $spp]);
  
 	}
+
+    public function carihistori(Request $request)
+	{
+		// menangkap data pencarian
+		$cari = $request->cari;
+            
+    		// mengambil data dari table pegawai sesuai pencarian data
+            $siswa= DB::table('siswa')
+            ->where('nama','like',"%".$cari."%")
+            ->get();
+            $nisn;
+            foreach ($siswa as $p) {
+                $nisn = $p->nisn;
+            }
+            $pembayaran = DB::table('pembayaran')
+            ->join('users', 'pembayaran.id_petugas', '=', 'users.id') //petugas
+            ->select('pembayaran.*', 'users.*')
+            ->where('nisn',$nisn)
+            ->paginate();
+         
+        
+            return view('history',['pembayaran' => $pembayaran, 'siswa' => $siswa]);
+	}
+
     public function bayar_spp(Request $request)
     {	
         DB::table('pembayaran')->insert([
@@ -57,31 +104,10 @@ class PembayaranController extends Controller
             'jumlah_bayar' => $request->jumlah_bayar,
             
         ]);
-        $kelas = DB::table('spp')->where('id_spp',$request->id_spp)->delete();
+        $spp = DB::table('spp')->where('id_spp',$request->id_spp)->delete();
         return redirect('pembayaran');
     }
-    public function editkelas($id)
-    {	
-        $kelas = DB::table('kelas')->where('id_kelas',$id)->get();
-        return view('admin/kelas/editkelas',['kelas' => $kelas]);
-    }  
-
-    public function updatekelas(Request $request)
-    {
-
-        DB::table('kelas')->where('id_kelas',$request->id_kelas)->update([
-            'nama_kelas' => $request->nama_kelas,
-            'kompetensi_keahlian' => $request->kompetensi_keahlian
-        ]);
-
-        return redirect('admin/kelas');
-    }
-
-    public function hapuskelas($id)
-    {	
-        $kelas = DB::table('kelas')->where('id_kelas',$id)->delete();
-        return redirect('admin/kelas');
-    }
+    
     
       
 }
